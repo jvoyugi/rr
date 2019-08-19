@@ -1,0 +1,74 @@
+% Rules
+father_of(X,Y):-
+    ismale(Y),
+    parent_of(X,Y),
+    not(X=Y).
+mother_of(X,Y):-
+    isfemale(Y),
+    parent_of(X,Y),
+    not(X=Y).
+sibling_of(A,B):-
+    parent_of(A,X),
+    parent_of(B,X),
+    not(A=B).
+brother_of(A,B):-
+    ismale(B),
+    sibling_of(A,B).
+sister_of(A,B):-
+    isfemale(B),
+    sibling_of(A,B).
+uncle_of(X,Y):-
+    brother_of(B,Y),
+    parent_of(X,B),
+    not(X=Y).
+aunt_of(X,Y):-
+    sister_of(B,Y),
+    parent_of(X,B),
+    not(X=Y).
+cousin_of(X,Y):-
+    (uncle_of(Y,A);aunt_of(Y,A)),
+    parent_of(X,A),
+    not(X=Y).
+nephew_of(X,Y):-
+    ismale(Y),
+    cousin_of(X,Y).
+niece_of(X,Y):-
+    isfemale(Y),
+    cousin_of(X,Y).
+grandparent_of(X,Y):-
+    parent_of(A,Y),
+    parent_of(X,A),
+    not(X=Y).
+grandfather_of(X,Y):-
+    ismale(Y),
+    grandparent_of(X,Y).
+grandmother_of(X,Y):-
+    isfemale(Y),
+    grandparent_of(X,Y).
+
+% Facts
+isfemale(margaret).
+isfemale(ann).
+isfemale(judith).
+isfemale(naomi).
+isfemale(lauren).
+ismale(clive).
+ismale(noah).
+ismale(javan).
+ismale(cosmas).
+ismale(mike).
+ismale(daniel).
+parent_of(daniel,margaret).
+parent_of(mike,margaret).
+parent_of(ann,margaret).
+parent_of(daniel,cosmas).
+parent_of(mike,cosmas).
+parent_of(ann,cosmas).
+parent_of(javan,daniel).
+parent_of(noah,daniel).
+parent_of(naomi,daniel).
+parent_of(javan,judith).
+parent_of(noah,judith).
+parent_of(naomi,judith).
+parent_of(clive,ann).
+parent_of(lauren,mike).
